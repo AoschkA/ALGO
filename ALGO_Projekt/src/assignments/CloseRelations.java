@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -15,6 +16,7 @@ public class CloseRelations {
 	String answer;
 	boolean morefriends = true;
 	boolean check = true;
+	boolean[][] f;
 	
 	public void run() throws IOException {
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -24,9 +26,12 @@ public class CloseRelations {
 			numberofpersons++;
 		}
 		}
-		
-		boolean[][] f = new boolean[numberofpersons][numberofpersons]; 
-		
+		int k = 1;
+		f = new boolean[numberofpersons][]; 
+		for (int p=0; p<numberofpersons; p++){
+			f[p] = new boolean[p+1]; 
+		k++;
+		}
 		while (morefriends) {
 		String temp = input.readLine();
 		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
@@ -41,15 +46,19 @@ public class CloseRelations {
 				try{
 				tempToken = Integer.parseInt(tokenizer.nextToken());
 				}catch(NoSuchElementException e){
+					break;
 				}
 			}
 			while(check){
+				Arrays.sort(checkArray);
 				for(int q = arraySpot+1; q<checkArray.length; q++){
-					if(f[checkArray[arraySpot]][checkArray[q]] == false){
+					if(f[checkArray[q]][checkArray[arraySpot]] == false){
+						System.out.println(checkArray[q] + " " + checkArray[arraySpot]);
 						answer = "nej";
 						break;
 					}
 					else{
+						System.out.println(checkArray[q] + " " + checkArray[arraySpot]);
 						answer = "ja";
 					}
 				}
@@ -66,9 +75,18 @@ public class CloseRelations {
 			break;
 		}else{
 		try {
+			int tempOne;
+			int tempTwo;
 		freindOne = Integer.parseInt(tokenizer.nextToken());
 		freindTwo = Integer.parseInt(tokenizer.nextToken());
-		f[freindOne][freindTwo] = true;
+		if (freindTwo < freindOne){
+			tempOne = freindOne;
+			tempTwo = freindTwo;
+		}else{
+			tempOne = freindTwo;
+			tempTwo = freindOne;
+		}
+		f[tempOne][tempTwo] = true;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
