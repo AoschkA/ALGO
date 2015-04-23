@@ -4,45 +4,46 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 public class CloseRelations {
 	int numberofpersons = 1;
-	int freindTwo;
-	int freindOne;
+	int friendTwo;
+	int friendOne;
 	String answer;
 	boolean morefriends = true;
 	boolean check = true;
-	boolean[][] f;
+	BufferedReader input;
+	String users;
+	private LinkedList<Integer>[] edges;
+	private ArrayList<Integer> checkList;
 	
-	public void run() throws IOException {
-		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		String users = input.readLine();
-		for (int i=0; i<users.length();i++) {
+	public void run() throws IOException {	
+	input = new BufferedReader(new InputStreamReader(System.in));
+	users = input.readLine();
+	for (int i=0; i<users.length();i++) {
 		if (users.charAt(i)==' ') {
 			numberofpersons++;
 		}
-		}
-		int k = 1;
-		f = new boolean[numberofpersons][]; 
-		for (int p=0; p<numberofpersons; p++){
-			f[p] = new boolean[p+1]; 
-		k++;
-		}
-		while (morefriends) {
+	}
+	createGraph(numberofpersons);	
+		
+	
+	while (morefriends) {
 		String temp = input.readLine();
 		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
 		if (temp.contains("taetvenskab")) {
+//			  for(int i = 0; i < edges.length; i++) {
+//		            System.out.println(edges[i].toString());
+//		        }
 			int j = tokenizer.countTokens();
-			int arraySpot = 0;
 			String venskab = tokenizer.nextToken();
 			int tempToken = Integer.parseInt(tokenizer.nextToken());
-			int[] checkArray = new int[j-1];
+			checkList = new ArrayList<Integer>();
 			for(int i=0; i<j-1; i++){
-				checkArray[i] = tempToken;
+				checkList.add(tempToken);
 				try{
 				tempToken = Integer.parseInt(tokenizer.nextToken());
 				}catch(NoSuchElementException e){
@@ -50,46 +51,26 @@ public class CloseRelations {
 				}
 			}
 			while(check){
-				Arrays.sort(checkArray);
-				for(int q = arraySpot+1; q<checkArray.length; q++){
-					if(f[checkArray[q]][checkArray[arraySpot]] == false){
-						System.out.println(checkArray[q] + " " + checkArray[arraySpot]);
-						answer = "nej";
-						break;
+				for(int q = 0; q<checkList.size(); q++){
+					if(edges[checkList.get(q)].containsAll(checkList)){
+						answer = "ja";
 					}
 					else{
-						System.out.println(checkArray[q] + " " + checkArray[arraySpot]);
-						answer = "ja";
+						answer = "nej";
+						break;
 					}
 				}
 				if(answer == "nej"){
 					break;
 				}
-				arraySpot++;
-				if(arraySpot == checkArray.length){
-					break;
-				}
 			}
-			
 			morefriends = false;
 			break;
 		}else{
-		try {
-			int tempOne;
-			int tempTwo;
-		freindOne = Integer.parseInt(tokenizer.nextToken());
-		freindTwo = Integer.parseInt(tokenizer.nextToken());
-		if (freindTwo < freindOne){
-			tempOne = freindOne;
-			tempTwo = freindTwo;
-		}else{
-			tempOne = freindTwo;
-			tempTwo = freindOne;
-		}
-		f[tempOne][tempTwo] = true;
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
+			friendOne = Integer.parseInt(tokenizer.nextToken());
+			friendTwo = Integer.parseInt(tokenizer.nextToken());
+			addEdge(friendOne, friendTwo);
+		
 		}
 		}
 		input.close();
@@ -97,10 +78,26 @@ public class CloseRelations {
 		System.out.println(answer);
 		
 	}
+	
+	
+	public void addEdge(int o , int p){
+			edges[o].add(p);
+			edges[p].add(o);
+	}
+
+	
 	public static void main(String[] args) throws IOException {
 		CloseRelations c = new CloseRelations();
 		c.run();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void createGraph(int numberofpersons){	
+		this.numberofpersons = numberofpersons;
+        edges = (LinkedList<Integer>[]) new LinkedList[numberofpersons];
+        for (int i = 0; i < numberofpersons; i++) {
+            edges[i] = new LinkedList<Integer>();
+            edges[i].add(i);
+        }
+	}
 }
-
