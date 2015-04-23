@@ -1,6 +1,7 @@
 package assignments;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -35,9 +36,6 @@ public class CloseRelations {
 		String temp = input.readLine();
 		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
 		if (temp.contains("taetvenskab")) {
-//			  for(int i = 0; i < edges.length; i++) {
-//		            System.out.println(edges[i].toString());
-//		        }
 			int j = tokenizer.countTokens();
 			String venskab = tokenizer.nextToken();
 			int tempToken = Integer.parseInt(tokenizer.nextToken());
@@ -50,19 +48,14 @@ public class CloseRelations {
 					break;
 				}
 			}
-			while(check){
-				for(int q = 0; q<checkList.size(); q++){
-					if(edges[checkList.get(q)].containsAll(checkList)){
-						answer = "ja";
-					}
-					else{
-						answer = "nej";
-						break;
-					}
-				}
-				if(answer == "nej"){
+			
+			for(int q = 0; q<checkList.size(); q++){
+				if(!edges[checkList.get(q)].containsAll(checkList)){
+					answer = "nej";
 					break;
-				}
+				}else{
+					answer = "ja";
+					}
 			}
 			morefriends = false;
 			break;
@@ -72,11 +65,10 @@ public class CloseRelations {
 			addEdge(friendOne, friendTwo);
 		
 		}
-		}
-		input.close();
-		
-		System.out.println(answer);
-		
+	}
+	
+	input.close();
+	System.out.println(answer);	
 	}
 	
 	
@@ -85,7 +77,6 @@ public class CloseRelations {
 			edges[p].add(o);
 	}
 
-	
 	public static void main(String[] args) throws IOException {
 		CloseRelations c = new CloseRelations();
 		c.run();
