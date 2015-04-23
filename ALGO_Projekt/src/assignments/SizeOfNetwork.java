@@ -3,8 +3,6 @@ package assignments;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
-import java.util.StringTokenizer;
 
 public class SizeOfNetwork {
 	int numberofpersons = 1;
@@ -15,13 +13,9 @@ public class SizeOfNetwork {
 	
 	public void run() throws IOException {
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		String users = input.readLine();
-		for (int i=0; i<users.length();i++) {
-		if (users.charAt(i)==' ') {
-			numberofpersons++;
-		}
-		}
-		
+		String users = input.readLine();		
+		String[] n = users.split(" ");
+		numberofpersons= n.length;
 		
 		while (morefriends) {
 		String temp = input.readLine();
@@ -30,14 +24,14 @@ public class SizeOfNetwork {
 			break;
 		}
 		
-		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
-		
-		try {
-		freindOne = Integer.parseInt(tokenizer.nextToken());
-		freindTwo = Integer.parseInt(tokenizer.nextToken());
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
+//		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
+//		
+//		try {
+//		freindOne = Integer.parseInt(tokenizer.nextToken());
+//		freindTwo = Integer.parseInt(tokenizer.nextToken());
+//		} catch (NumberFormatException e) {
+//			e.printStackTrace();
+//		}
 		
 		numberoffriends++;
 		}
