@@ -54,6 +54,7 @@ public class Final {
 		}
 		numberoffriends++;
 	}
+		runAlgorithm();
 	}
 	
 	public void runAlgorithm() {
