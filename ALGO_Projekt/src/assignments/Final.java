@@ -66,36 +66,46 @@ public class Final {
 		if (algo.equals("stoerrelse")) {
 			System.out.println(numberofpersons+" "+numberoffriends);
 		} else if (algo.equals("taetvenskab")) {
-			while (run) {
-				StringTokenizer tokenizer = new StringTokenizer(temp, " ");
-				int j = tokenizer.countTokens();
-				String venskab = tokenizer.nextToken();
-				int tempToken = Integer.parseInt(tokenizer.nextToken());
-				checkList = new ArrayList<Integer>();
-				for(int i=0; i<j-1; i++){
-					checkList.add(tempToken);
-					try{
-						tempToken = Integer.parseInt(tokenizer.nextToken());
-					}catch(NoSuchElementException e){
-						break;
-					}
-				}	
-				for(int q = 0; q<checkList.size(); q++){
-					if(!edges[checkList.get(q)].containsAll(checkList)){
-						answer = "nej";
-						break;
-					}else{
-						answer = "ja";
-						}
-					}
-				run = false;
-				break;	
-			}
-			input.close();
-			System.out.println(answer);	
-			}
+				closeRelations();
+		} else if(algo.equals("tvenner")){
+				misterTsFriends();
 		}
+	}
 	
+	private void misterTsFriends() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void closeRelations() throws IOException{
+		while (run) {
+			StringTokenizer tokenizer = new StringTokenizer(temp, " ");
+			int j = tokenizer.countTokens();
+			String venskab = tokenizer.nextToken();
+			int tempToken = Integer.parseInt(tokenizer.nextToken());
+			checkList = new ArrayList<Integer>();
+			for(int i=0; i<j-1; i++){
+				checkList.add(tempToken);
+				try{
+					tempToken = Integer.parseInt(tokenizer.nextToken());
+				}catch(NoSuchElementException e){
+					break;
+				}
+			}	
+			for(int q = 0; q<checkList.size(); q++){
+				if(!edges[checkList.get(q)].containsAll(checkList)){
+					answer = "nej";
+					break;
+				}else{
+					answer = "ja";
+					}
+				}
+			run = false;
+			break;	
+		}
+		input.close();
+		System.out.println(answer);	
+	}
 	
 	public void addEdge(int o , int p){
 		edges[o].add(p);
