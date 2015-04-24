@@ -13,6 +13,8 @@ public class Final {
 	int numberoffriends = 0;
 	int friendTwo;
 	int friendOne;
+	int chaindept;
+	int self;
 	boolean morefriends = true;
 	boolean run = true;
 	String algo;
@@ -22,6 +24,7 @@ public class Final {
 	private ArrayList<Person> userlist = new ArrayList<Person>();
 	BufferedReader input;
 	private ArrayList<Integer> checkList;
+	ArrayList<Integer> friendlist = new ArrayList<Integer>();
 	String answer;
 	String temp;
 	
@@ -68,12 +71,35 @@ public class Final {
 		} else if (algo.equals("taetvenskab")) {
 				closeRelations();
 		} else if(algo.equals("tvenner")){
-				misterTsFriends();
-		}
+//			int tempToken1 = Integer.parseInt(tokenizer.nextToken());
+//			int tempToken2 = Integer.parseInt(tokenizer.nextToken());
+//			chaindept=tempToken2;
+//			self=tempToken1;
+			// friendlist.add(self);
+			chaindept=2;
+			self=6;
+			if (chaindept==0) {
+				System.out.println(userlist.get(self).name);
+			} else {
+			misterTsFriends(self, 1);
+			String output= "";
+			for (int i=0; i<friendlist.size(); i++) {
+				output += userlist.get(friendlist.get(i)).name + " ";
+			}
+			System.out.println(output);
+		}}
 	}
 	
-	private void misterTsFriends() {
-		// TODO Auto-generated method stub
+	private void misterTsFriends(int searchpoint, int currentchain) {
+		for (int i=1; i<edges[searchpoint].size(); i++) {
+		if (!friendlist.contains(edges[searchpoint].get(i))) {
+			friendlist.add(edges[searchpoint].get(i));
+		}
+		if (currentchain<chaindept) {
+			misterTsFriends(edges[searchpoint].get(i), currentchain+1);
+		}
+		}
+
 		
 	}
 
