@@ -90,4 +90,13 @@ public class CloseRelations {
             edges[i].add(i);
         }
 	}
+	public class Person {
+		int ID;
+		String name;
+		
+		public Person(int ID, String name) {
+			this.ID=ID;
+			this.name=name;
+		}
+	}
 }
