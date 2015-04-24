@@ -14,14 +14,19 @@ public class Final {
 	int friendTwo;
 	int friendOne;
 	boolean morefriends = true;
+	boolean run = true;
 	String algo;
 	String[] namelist;
 	StringTokenizer tokenizer;
 	private LinkedList<Integer>[] edges;
 	private ArrayList<Person> userlist = new ArrayList<Person>();
+	BufferedReader input;
+	private ArrayList<Integer> checkList;
+	String answer;
+	String temp;
 	
 	public void run() throws IOException {
-		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		input = new BufferedReader(new InputStreamReader(System.in));
 		String users = input.readLine();		
 		namelist = users.split(" ");
 		numberofpersons= namelist.length;
@@ -32,7 +37,7 @@ public class Final {
 		createGraph(numberofpersons);
 		
 		while (morefriends) {
-		String temp = input.readLine();
+		temp = input.readLine();
 		tokenizer = new StringTokenizer(temp, " ");
 		if (temp.contains("stoerrelse")) {
 			morefriends = false;
@@ -57,13 +62,40 @@ public class Final {
 		runAlgorithm();
 	}
 	
-	public void runAlgorithm() {
+	public void runAlgorithm() throws IOException {
 		if (algo.equals("stoerrelse")) {
 			System.out.println(numberofpersons+" "+numberoffriends);
 		} else if (algo.equals("taetvenskab")) {
-			
+			while (run) {
+				StringTokenizer tokenizer = new StringTokenizer(temp, " ");
+				int j = tokenizer.countTokens();
+				String venskab = tokenizer.nextToken();
+				int tempToken = Integer.parseInt(tokenizer.nextToken());
+				checkList = new ArrayList<Integer>();
+				for(int i=0; i<j-1; i++){
+					checkList.add(tempToken);
+					try{
+						tempToken = Integer.parseInt(tokenizer.nextToken());
+					}catch(NoSuchElementException e){
+						break;
+					}
+				}	
+				for(int q = 0; q<checkList.size(); q++){
+					if(!edges[checkList.get(q)].containsAll(checkList)){
+						answer = "nej";
+						break;
+					}else{
+						answer = "ja";
+						}
+					}
+				run = false;
+				break;	
+			}
+			input.close();
+			System.out.println(answer);	
+			}
 		}
-	}
+	
 	
 	public void addEdge(int o , int p){
 		edges[o].add(p);
