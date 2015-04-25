@@ -98,9 +98,10 @@ public class Final {
 			friendlist.add(edges[searchpoint].get(i));
 		}
 		if (currentchain<chaindept) {
-			if (!userlist.get(edges[searchpoint].get(i)).marked)
+			if (!userlist.get(edges[searchpoint].get(i)).marked) {
 			misterTsFriends(edges[searchpoint].get(i), currentchain+1);
 			userlist.get(edges[searchpoint].get(i)).marked=true;
+			}
 		}
 		}
 
