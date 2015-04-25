@@ -35,7 +35,6 @@ public class FriendChain {
 		String temp = input.readLine();
 		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
 		if (temp.contains("tvenner")) {
-			int j = tokenizer.countTokens();
 			String venskab = tokenizer.nextToken();
 			int tempStartPerson = Integer.parseInt(tokenizer.nextToken());
 			int tempEndFriends = Integer.parseInt(tokenizer.nextToken());

@@ -10,13 +10,11 @@ import java.util.StringTokenizer;
 
 public class CloseRelations {
 	int numberofpersons = 1;
-	int friendTwo;
-	int friendOne;
-	String answer;
-	boolean morefriends = true;
-	boolean check = true;
+	int friendTwo,friendOne;
+	String answer, users;
+	boolean morefriends = true, check = true;
 	BufferedReader input;
-	String users;
+
 	private LinkedList<Integer>[] edges;
 	private ArrayList<Integer> checkList;
 	

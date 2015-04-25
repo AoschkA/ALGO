@@ -1,6 +1,7 @@
 package assignments;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -9,15 +10,9 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 public class Final {
-	int numberofpersons = 0;
-	int numberoffriends = 0;
-	int friendTwo;
-	int friendOne;
-	int chaindept;
-	int self;
-	boolean morefriends = true;
-	boolean run = true;
-	String algo;
+	int numberofpersons = 0, numberoffriends = 0, friendTwo, friendOne, chaindept, self;
+	boolean morefriends = true, run = true;
+	String algo, temp, answer;
 	String[] namelist;
 	StringTokenizer tokenizer;
 	private LinkedList<Integer>[] edges;
@@ -25,11 +20,10 @@ public class Final {
 	BufferedReader input;
 	private ArrayList<Integer> checkList;
 	ArrayList<Integer> friendlist = new ArrayList<Integer>();
-	String answer;
-	String temp;
 	
 	public void run() throws IOException {
-		input = new BufferedReader(new InputStreamReader(System.in));
+		FileReader fr = new FileReader("C:/Users/Juste/Sample04.txt");
+		input = new BufferedReader(fr);
 		String users = input.readLine();		
 		namelist = users.split(" ");
 		numberofpersons= namelist.length;
@@ -37,6 +31,7 @@ public class Final {
 		for (int i=0; i<numberofpersons; i++) {
 			userlist.add(new Person(i,namelist[i]));
 		}
+		System.out.println(numberofpersons);
 		createGraph(numberofpersons);
 		
 		while (morefriends) {
