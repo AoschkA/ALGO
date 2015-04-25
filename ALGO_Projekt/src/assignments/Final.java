@@ -71,17 +71,19 @@ public class Final {
 		} else if (algo.equals("taetvenskab")) {
 				closeRelations();
 		} else if(algo.equals("tvenner")){
-//			int tempToken1 = Integer.parseInt(tokenizer.nextToken());
-//			int tempToken2 = Integer.parseInt(tokenizer.nextToken());
-//			chaindept=tempToken2;
-//			self=tempToken1;
-			// friendlist.add(self);
-			chaindept=2;
-			self=6;
+			String venskab = tokenizer.nextToken();
+			int tempToken1 = Integer.parseInt(tokenizer.nextToken());
+			int tempToken2 = Integer.parseInt(tokenizer.nextToken());
+			chaindept=tempToken2;
+			self=tempToken1;
+			userlist.get(self).marked=true;
 			if (chaindept==0) {
 				System.out.println(userlist.get(self).name);
 			} else {
 			misterTsFriends(self, 1);
+			if (!friendlist.contains(self)) {
+				friendlist.add(self);
+			}
 			String output= "";
 			for (int i=0; i<friendlist.size(); i++) {
 				output += userlist.get(friendlist.get(i)).name + " ";
@@ -96,7 +98,9 @@ public class Final {
 			friendlist.add(edges[searchpoint].get(i));
 		}
 		if (currentchain<chaindept) {
+			if (!userlist.get(edges[searchpoint].get(i)).marked)
 			misterTsFriends(edges[searchpoint].get(i), currentchain+1);
+			userlist.get(edges[searchpoint].get(i)).marked=true;
 		}
 		}
 
@@ -154,10 +158,12 @@ public class Final {
 	}
 	
 	public class Person {
+		boolean marked;
 		int ID;
 		String name;
 		
 		public Person(int ID, String name) {
+			marked=false;
 			this.ID=ID;
 			this.name=name;
 		}
