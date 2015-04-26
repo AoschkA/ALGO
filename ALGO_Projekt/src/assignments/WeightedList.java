@@ -18,6 +18,7 @@ public class WeightedList {
 	private ArrayList<Person> userlist = new ArrayList<Person>();
 	private String[] names;
 	
+	@SuppressWarnings("unused")
 	public void run() throws IOException{
 		input = new BufferedReader(new InputStreamReader(System.in));
 		String users = input.readLine();		
@@ -40,7 +41,7 @@ public class WeightedList {
 					System.out.println(userlist.get(i).name + userlist.get(i).neighbors());
 				}
 				for(int q=0; q<edges.size(); q++){
-					System.out.println("person: "+ userlist.get(edges.get(q).id).name + " weight" + edges.get(q).weight);
+					System.out.println(" weight" + edges.get(q).weight);
 				}
 			}else{
 				friendOne = Integer.parseInt(tokenizer.nextToken());
@@ -55,26 +56,26 @@ public class WeightedList {
 	
 
 	private void addEdge(int one, int two, int weight) {
-		edges.add(new Edge(userlist.get(one).id,userlist.get(one),userlist.get(two),weight));
-		edges.add(new Edge(userlist.get(two).id,userlist.get(two),userlist.get(one),weight));
+		edges.add(new Edge(userlist.get(one),userlist.get(two),weight));
+		edges.add(new Edge(userlist.get(two),userlist.get(one),weight));
 		
 	}
 
+	@SuppressWarnings("unused")
 	public void Djikstra(int start){
 		Person tempPerson;
-		for(int u = 0; u<numberofpersons; u++){
-		userlist.get(u).setDistance(0);
-		tempPerson = userlist.get(u);
+		userlist.get(start).setDistance(0);
+		tempPerson = userlist.get(start);
 		priorityQueue = new PriorityQueue<>();
 		priorityQueue.add(tempPerson);
-		}
+		
 		while(!priorityQueue.isEmpty()){
-			tempPerson = priorityQueue.poll();
-			for(int i = 0; i<tempPerson.numberofneighbors; i++){
-				int target = edges.get(tempPerson.id).getEdge();
+		Person	tempPerson4 = priorityQueue.poll();
+			for(int i = 0; i<tempPerson4.numberofneighbors; i++){
+				int target = edges.get(tempPerson4.id).getEdge();
 				System.out.println(target);
-				Person tempPerson2 = tempPerson.getNeighbor(target);
-				int weight = edges.get(tempPerson.id).getWeight(tempPerson, tempPerson2); 
+				Person tempPerson2 = tempPerson4.getNeighbor(target);
+				int weight = edges.get(tempPerson4.id-1).weight; 
 				System.out.println(weight);
 			}
 		}
@@ -87,23 +88,21 @@ public class WeightedList {
 	
 	public class Edge  { 
 		  Person one, two;
-		  int weight, id,returnWeight; 
+		  int weight,returnWeight; 
 		  
-		  public Edge(int id, Person one, Person two, int weight) {
+		  public Edge(Person one, Person two, int weight) {
 		    this.one = one;
 		    this.two = two;
 		    this.weight = weight;
-		    this.id = id;
+
 		    setNumberofN(one);
 		  }
 		  public int getEdge(){
 			 int returnPerson = two.id;
 			 return returnPerson;		 
 		  }
-		  public int getWeight(Person one2, Person two2){
-			  if(one == one2 && two==two2){
+		  public int getWeight(){
 				 returnWeight = weight;
-			  }
 			  return returnWeight;	  
 		  }
 		  public void setNumberofN(Person one){
