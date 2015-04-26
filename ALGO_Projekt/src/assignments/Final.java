@@ -22,8 +22,7 @@ public class Final {
 	ArrayList<Integer> friendlist = new ArrayList<Integer>();
 	
 	public void run() throws IOException {
-		FileReader fr = new FileReader("C:/Users/Juste/Sample04.txt");
-		input = new BufferedReader(fr);
+		input = new BufferedReader(new InputStreamReader(System.in));
 		String users = input.readLine();		
 		namelist = users.split(" ");
 		numberofpersons= namelist.length;
@@ -31,7 +30,6 @@ public class Final {
 		for (int i=0; i<numberofpersons; i++) {
 			userlist.add(new Person(i,namelist[i]));
 		}
-		System.out.println(numberofpersons);
 		createGraph(numberofpersons);
 		
 		while (morefriends) {
@@ -69,38 +67,29 @@ public class Final {
 			String venskab = tokenizer.nextToken();
 			int tempToken1 = Integer.parseInt(tokenizer.nextToken());
 			int tempToken2 = Integer.parseInt(tokenizer.nextToken());
-			chaindept=tempToken2;
 			self=tempToken1;
+			chaindept=tempToken2;
 			userlist.get(self).marked=true;
-			if (chaindept==0) {
-				System.out.println(userlist.get(self).name);
-			} else {
-			misterTsFriends(self, 1);
-			if (!friendlist.contains(self)) {
-				friendlist.add(self);
-			}
+			friendChain(self, 0);
 			String output= "";
 			for (int i=0; i<friendlist.size(); i++) {
 				output += userlist.get(friendlist.get(i)).name + " ";
 			}
 			System.out.println(output);
-		}}
+		}
 	}
 	
-	private void misterTsFriends(int searchpoint, int currentchain) {
+	private void friendChain(int searchpoint, int currentchain) {
+		userlist.get(edges[searchpoint].get(0)).marked=true;
+		if (!friendlist.contains(edges[searchpoint].get(0))) {
+			friendlist.add(edges[searchpoint].get(0));
+		}
+		if (currentchain<chaindept){
 		for (int i=1; i<edges[searchpoint].size(); i++) {
-		if (!friendlist.contains(edges[searchpoint].get(i))) {
-			friendlist.add(edges[searchpoint].get(i));
-		}
-		if (currentchain<chaindept) {
 			if (!userlist.get(edges[searchpoint].get(i)).marked) {
-			misterTsFriends(edges[searchpoint].get(i), currentchain+1);
-			userlist.get(edges[searchpoint].get(i)).marked=true;
+				friendChain(edges[searchpoint].get(i), currentchain+1);
 			}
-		}
-		}
-
-		
+		}}
 	}
 
 	public void closeRelations() throws IOException{
