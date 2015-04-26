@@ -96,8 +96,9 @@ public class Final {
 	private void BFS(Queue<Integer> kuu) {
 		while (!kuu.isEmpty()) {
 			int n = kuu.poll();
-			if (!friendlist.contains(edges[n].get(0))) {
+			if (!userlist.get(edges[n].get(0)).added) {
 				friendlist.add(edges[n].get(0));
+				userlist.get(edges[n].get(0)).added=true;
 			}
 			for (int i=1; i<edges[n].size(); i++) {
 				 if (!userlist.get(edges[n].get(i)).marked) {
@@ -161,11 +162,13 @@ public class Final {
 	
 	public class Person {
 		boolean marked;
+		boolean added;
 		int ID;
 		String name;
 		
 		public Person(int ID, String name) {
 			marked=false;
+			added=false;
 			this.ID=ID;
 			this.name=name;
 		}
