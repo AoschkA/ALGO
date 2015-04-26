@@ -28,60 +28,7 @@ public class FriendChain {
 			numberofpersons++;
 		}
 	}
-	createGraph(numberofpersons);	
 		
-	
-	while (morefriends) {
-		String temp = input.readLine();
-		StringTokenizer tokenizer = new StringTokenizer(temp, " ");
-		if (temp.contains("tvenner")) {
-			String venskab = tokenizer.nextToken();
-			int tempStartPerson = Integer.parseInt(tokenizer.nextToken());
-			int tempEndFriends = Integer.parseInt(tokenizer.nextToken());
-			
-			for(int q = 0; q<tempEndFriends; q++){
-				if(!edges[checkList.get(q)].containsAll(checkList)){
-					answer = "nej";
-					break;
-				}else{
-					answer = "ja";
-					}
-			}
-			morefriends = false;
-			break;
-		}else{
-			friendOne = Integer.parseInt(tokenizer.nextToken());
-			friendTwo = Integer.parseInt(tokenizer.nextToken());
-			addEdge(friendOne, friendTwo);
-		
-		}
 	}
 	
-	input.close();
-	System.out.println(answer);	
-	}
-	
-	
-	public void addEdge(int o , int p){
-			edges[o].add(p);
-			edges[p].add(o);
-	}
-
-	public static void main(String[] args) throws IOException {
-		FriendChain c = new FriendChain();
-		c.run();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void createGraph(int numberofpersons){	
-		this.numberofpersons = numberofpersons;
-		names = new ArrayList[numberofpersons];
-		StringTokenizer tokenizer = new StringTokenizer(users, " ");
-        edges = (LinkedList<Integer>[]) new LinkedList[numberofpersons];
-        for (int i = 0; i < numberofpersons; i++) {
-            edges[i] = new LinkedList<Integer>();
-            edges[i].add(i);
-            names[i].add(tokenizer.nextToken());
-        }
-	}
 }

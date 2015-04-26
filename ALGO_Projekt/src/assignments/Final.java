@@ -7,7 +7,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.StringTokenizer;
+
+import javax.xml.soap.Node;
 
 public class Final {
 	int numberofpersons = 0, numberoffriends = 0, friendTwo, friendOne, chaindept, self;
@@ -20,6 +23,7 @@ public class Final {
 	BufferedReader input;
 	private ArrayList<Integer> checkList;
 	ArrayList<Integer> friendlist = new ArrayList<Integer>();
+	Queue<Integer> q = new LinkedList<Integer>();
 	
 	public void run() throws IOException {
 		input = new BufferedReader(new InputStreamReader(System.in));
@@ -67,9 +71,20 @@ public class Final {
 			String venskab = tokenizer.nextToken();
 			int tempToken1 = Integer.parseInt(tokenizer.nextToken());
 			int tempToken2 = Integer.parseInt(tokenizer.nextToken());
-			self=tempToken1;
+			int root=tempToken1;
 			chaindept=tempToken2;
-			friendChain(self, 0);
+			Queue<Integer> searchpoints = new LinkedList<Integer>();
+			searchpoints.add(root);
+			userlist.get(root).marked=true;			
+			for (int i=0; i<=chaindept; i++) {
+				while (!searchpoints.isEmpty()) {
+					BFS(searchpoints);
+				}
+				while (!q.isEmpty()) {
+					searchpoints.add(q.poll());
+				}
+			}
+						
 			String output= "";
 			for (int i=0; i<friendlist.size(); i++) {
 				output += userlist.get(friendlist.get(i)).name + " ";
@@ -78,17 +93,20 @@ public class Final {
 		}
 	}
 	
-	private void friendChain(int searchpoint, int currentchain) {
-		userlist.get(edges[searchpoint].get(0)).marked=true;
-		if (!friendlist.contains(edges[searchpoint].get(0))) {
-			friendlist.add(edges[searchpoint].get(0));
-		}
-		if (currentchain<chaindept){
-		for (int i=1; i<edges[searchpoint].size(); i++) {
-			if (!userlist.get(edges[searchpoint].get(i)).marked) {
-				friendChain(edges[searchpoint].get(i), currentchain+1);
+	private void BFS(Queue<Integer> kuu) {
+		while (!kuu.isEmpty()) {
+			int n = kuu.poll();
+			if (!friendlist.contains(edges[n].get(0))) {
+				friendlist.add(edges[n].get(0));
 			}
-		}}
+			for (int i=1; i<edges[n].size(); i++) {
+				 if (!userlist.get(edges[n].get(i)).marked) {
+					 q.add(edges[n].get(i));
+					 userlist.get(edges[n].get(i)).marked=true;
+				 }
+			}
+		}
+		
 	}
 
 	public void closeRelations() throws IOException{
