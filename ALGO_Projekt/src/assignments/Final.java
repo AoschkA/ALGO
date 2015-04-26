@@ -13,12 +13,13 @@ import java.util.StringTokenizer;
 import javax.xml.soap.Node;
 
 public class Final {
-	int numberofpersons = 0, numberoffriends = 0, friendTwo, friendOne, chaindept, self;
+	int numberofpersons = 0, numberoffriends = 0, friendTwo, friendOne, chaindept, self, weight ;
 	boolean morefriends = true, run = true;
 	String algo, temp, answer;
 	String[] namelist;
 	StringTokenizer tokenizer;
 	private LinkedList<Integer>[] edges;
+	private LinkedList<Integer>[] weightList;
 	private ArrayList<Person> userlist = new ArrayList<Person>();
 	BufferedReader input;
 	private ArrayList<Integer> checkList;
@@ -54,8 +55,12 @@ public class Final {
 		} else{
 			friendOne = Integer.parseInt(tokenizer.nextToken());
 			friendTwo = Integer.parseInt(tokenizer.nextToken());
+			if(tokenizer.hasMoreTokens()){
+				weight = Integer.parseInt(tokenizer.nextToken());
+				addEdgeW(friendOne,friendTwo,weight);
+			}else{
 			addEdge(friendOne, friendTwo);
-		
+			}
 		}
 		numberoffriends++;
 	}
@@ -144,11 +149,18 @@ public class Final {
 		edges[o].add(p);
 		edges[p].add(o);
 	}
+	public void addEdgeW(int o , int p, int weight){
+		edges[o].add(p);
+		edges[p].add(o);
+		weightList[o].add(weight);
+		weightList[p].add(weight);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public void createGraph(int numberofpersons){	
 		this.numberofpersons = numberofpersons;
         edges = (LinkedList<Integer>[]) new LinkedList[numberofpersons];
+        weightList = (LinkedList<Integer>[]) new LinkedList[numberofpersons];
         for (int i = 0; i < numberofpersons; i++) {
             edges[i] = new LinkedList<Integer>();
             edges[i].add(i);
