@@ -69,7 +69,6 @@ public class Final {
 			int tempToken2 = Integer.parseInt(tokenizer.nextToken());
 			self=tempToken1;
 			chaindept=tempToken2;
-			userlist.get(self).marked=true;
 			friendChain(self, 0);
 			String output= "";
 			for (int i=0; i<friendlist.size(); i++) {
