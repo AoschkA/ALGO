@@ -55,6 +55,10 @@ public class WeightedList<T> {
 		input.close();
 	}
 	
+	private void runAlgorithm() {
+		
+	}
+	
 
 	private void addEdge(int one, int two, int weight) {
 		edges.add(new Edge(userlist.get(one).id,userlist.get(one),userlist.get(two),weight));
